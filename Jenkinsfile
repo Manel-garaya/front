@@ -30,14 +30,14 @@ pipeline {
                 script {
                     def imageName = "${rurl}/${imagename}:latest"
                     
-                    sh "docker build -t ${imageName} ."
+                    bat "docker build -t ${imageName} ."
                     
                     // Use Docker Hub credentials to log in
                     withCredentials([usernamePassword(credentialsId: dockerhubCredentials, passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
-                        sh "docker login -u ${env.DOCKERHUB_USERNAME} -p ${env.DOCKERHUB_PASSWORD}"
+                        bat "docker login -u ${env.DOCKERHUB_USERNAME} -p ${env.DOCKERHUB_PASSWORD}"
                     }
                     
-                    sh "docker push ${imageName}"
+                    bat "docker push ${imageName}"
                 }
             }
         }
@@ -48,8 +48,8 @@ pipeline {
                     
                  
                     
-                    sh "docker image rmi ${imageName}"
-                      sh "docker logout"
+                    bat "docker image rmi ${imageName}"
+                      bat "docker logout"
                 }
             }
         }
